@@ -7,7 +7,9 @@ set_target_properties(qiven-tp-sqlite3 PROPERTIES LINKER_LANGUAGE C
     DISABLE_PRECOMPILE_HEADERS ON FOLDER "ThirdParty")
 add_library(qiven::tp::sqlite3 ALIAS qiven-tp-sqlite3)
 
-target_include_directories(qiven-tp-sqlite3 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+# Public headers live in src/ for this package (amalgamation layout);
+# consumers #include <sqlite3.h> against this directory.
+target_include_directories(qiven-tp-sqlite3 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
 # Upstream amalgamation: C, relaxed warnings, CRT deprecation silenced —
 # all PRIVATE, on this target only.
