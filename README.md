@@ -7,7 +7,8 @@ copy, one provenance record, one CMake target for the whole workspace.
 
 Law: `qiven-devkit/docs/engineering/third-party-dependencies.md` (v2 —
 workspace singleton; classes S/P/H/F; per-class CMake shapes; consumption
-via `QIVEN_THIRD_PARTY_ROOT` + exact-SHA pins). Cross-repo CMake rules:
+via the workspace adapter's identity-checked root — the workspace lock
+node IS the pin, selected once). Cross-repo CMake rules:
 `qiven-devkit/docs/conventions/cross-repo-cmake.md`.
 
 ## Packages
@@ -24,6 +25,8 @@ via `QIVEN_THIRD_PARTY_ROOT` + exact-SHA pins). Cross-repo CMake rules:
   package CMakeLists) configures standalone.
 - `gate.cmd` — both, in order (the repository's local gate).
 
-Consumers pin this repository at an exact SHA
-(`QIVEN_THIRD_PARTY_PIN`, validated at their configure) and
-spot-verify provenance in their own gates (defense in depth).
+This singleton is selected ONCE in the workspace lock (a lock node;
+no consumer-local SHA remains — WR-5). Consumers receive the
+identity-checked root from the workspace adapter and spot-verify the
+singleton HEAD against the LOCKED node commit in their own gates,
+failing closed on mismatch (defense in depth).
