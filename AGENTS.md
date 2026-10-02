@@ -10,6 +10,10 @@ first.
   repository IS the singleton; per-repo third_party/ is forbidden).
 - Every package change updates its PROVENANCE.yaml in the same commit;
   the gate verifies digests — never edit vendored files casually.
+- Qiven discovery surface (B6): canonical usage for operator subcommands
+  (`surface`, `records`), workspace mechanisms (lock-update, resolver,
+  bootstrap) and devkit tool surfaces (schema-check, deploy bundle) is
+  qiven-devkit `docs/conventions/operator-usage.md`.
 - Roles, typed handoffs, execution authority and workflow are canonical
   in `JasonHuang3D/qiven-context`. This file grants no authority and
   repeats no contracts.
