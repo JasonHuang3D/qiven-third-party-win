@@ -121,6 +121,17 @@ def main() -> int:
     if failures:
         for failure in failures:
             print(f"[FAIL] third-party-verify: {failure}")
+        # B7b (four-element law, ADR-0060 D3): the FAIL summary teaches its
+        # rule and the mechanical route; the per-finding lines above are
+        # the bounded evidence.
+        print("[FAIL] third-party-verify: WHY: the package tree diverged from "
+              "its PROVENANCE.yaml record (rule: tpw/verify-provenance - "
+              "third-party law section 7: per-file SHA-256 inventory, no "
+              "unlisted files, CMakeLists per package)")
+        print("       NEXT action: FIX - reconcile the listed path/digest "
+              "(restore the recorded file or re-record the deliberate "
+              "change through the provenance workflow), then re-run; never "
+              "delete the record to pass")
         return 1
     print(f"[ OK ] third-party-verify: {len(packages)} package(s), {checked} file digest(s) verified")
     return 0
